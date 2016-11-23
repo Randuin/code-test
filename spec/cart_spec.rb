@@ -1,14 +1,15 @@
 require './cart'
 
 RSpec.describe Cart do
-  let(:item) { Item.new('Carrot', 100) }
+  let(:item) { Item.new('Carrot', 100, 10) }
+  let(:item_without_tax) { Item.new('Apple', 50) }
 
   describe '#subtotal' do
     it 'returns the total amount from the cart without tax' do
       cart = Cart.new
       cart.add_item(item)
       cart.add_item(item)
-      expect(cart.total).to eq(200)
+      expect(cart.subtotal).to eq(200)
     end
   end
 
@@ -18,9 +19,17 @@ RSpec.describe Cart do
       cart = Cart.new
       cart.add_item(item)
       cart.add_item(item)
-      expect(cart.subtotal).to eq(220)
+      expect(cart.total).to eq(220)
     end
   end
 
   # 2) Implement the idea that some items are produce and do not incur tax and write the tests that relate to this behavior. Feel free to change anything, add methods, delete methods, add classes, delete classes.
+  describe '#total' do
+    it 'returns the total amount from the cart with tax' do
+      cart = Cart.new
+      cart.add_item(item)
+      cart.add_item(item_without_tax)
+      expect(cart.total).to eq(160)
+    end
+  end  
 end
