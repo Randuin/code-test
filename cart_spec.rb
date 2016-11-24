@@ -1,26 +1,40 @@
 require './cart'
 
 RSpec.describe Cart do
-  let(:item) { Item.new('Carrot', 100, {:type => :produce}) }
+  let(:produce_item) { Item.new('Carrot', 100, { :type => :produce }) }
+  let(:cleaning_item) { Item.new('Mop', 350, { :type => :cleaning }) }
+
+  let(:mixed_cart) do
+    cart = Cart.new
+    cart.add_item(produce_item)
+    cart.add_item(cleaning_item)
+    cart
+  end
+
+  let(:non_produce_cart) do
+    cart = Cart.new
+    cart.add_item(cleaning_item)
+    cart.add_item(cleaning_item)
+    cart
+  end
 
   describe '#subtotal' do
     it 'returns the total amount from the cart without tax' do
-      cart = Cart.new
-      cart.add_item(item)
-      cart.add_item(item)
-      expect(cart.subtotal).to eq(200)
+      expect(mixed_cart.subtotal).to eq(450)
     end
   end
 
-  # 1) Implement the code that passes this test, assume tax rate of 10%
   describe '#total' do
-    it 'returns the total amount from the cart with tax' do
-      cart = Cart.new
-      cart.add_item(item)
-      cart.add_item(item)
-      expect(cart.total).to eq(220)
+    context 'when cart includes non-produce only' do
+      it 'returns total amount from cart with tax on all items' do
+        expect(non_produce_cart.total).to eq(770)
+      end
+    end
+
+    context 'when cart includes non-produce and produce' do
+      it 'returns total amount from cart with tax on non-produce only' do
+        expect(mixed_cart.total).to eq(485)
+      end
     end
   end
-
-  # 2) Implement the idea that some items are produce and do not incur tax and write the tests that relate to this behavior. Feel free to change anything, add methods, delete methods, add classes, delete classes.
 end

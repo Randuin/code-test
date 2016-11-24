@@ -26,8 +26,10 @@ class Cart
   def add_item(item)
     items << item
 
-    @tax += item.price * TAX_RATE
+    unless item.attributes[:type] == :produce
+      @tax += item.price * TAX_RATE
+    end
+
     @subtotal += item.price
   end
-
 end
