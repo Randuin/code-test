@@ -1,21 +1,30 @@
 class Item
-  attr_reader :name, :price, :attributes
+  attr_reader :name, :price
 
-  def initialize(name, price, attributes)
+  def initialize(name, price, tax_rate = 0.1)
     @name = name
     @price = price
-    @attributes = attributes
+    @tax_rate = tax_rate
+  end
+
+  def tax
+    price * @tax_rate
+  end
+end
+
+class Produce < Item
+  def tax
+    0
   end
 end
 
 class Cart
-  attr_reader :items, :subtotal, :tax, :tax_rate
+  attr_reader :items, :subtotal, :tax
 
-  def initialize(tax_rate = 0.1)
+  def initialize
     @items = []
     @subtotal = 0
     @tax = 0
-    @tax_rate = tax_rate
   end
 
   def total
@@ -25,10 +34,7 @@ class Cart
   def add_item(item)
     items << item
 
-    unless item.attributes[:type] == :produce
-      @tax += item.price * tax_rate
-    end
-
+    @tax += item.tax
     @subtotal += item.price
   end
 end
