@@ -45,6 +45,9 @@ RSpec.describe Cart do
   end
 
   describe '#total' do
-
+    it 'return the sum of the cart subtotal and tax' do
+      total = mixed_cart.subtotal + mixed_cart.tax
+      expect(mixed_cart.total).to eq(total)
+    end
   end
 end
