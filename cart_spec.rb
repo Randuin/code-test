@@ -18,6 +18,12 @@ RSpec.describe Cart do
     cart
   end
 
+  describe '#items' do
+    it 'returns all items that are added to cart' do
+      expect(mixed_cart.items).to contain_exactly(produce_item, cleaning_item)
+    end
+  end
+
   describe '#subtotal' do
     it 'returns the total amount from the cart without tax' do
       expect(mixed_cart.subtotal).to eq(450)
