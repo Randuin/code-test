@@ -30,17 +30,21 @@ RSpec.describe Cart do
     end
   end
 
-  describe '#total' do
+  describe '#tax' do
     context 'when cart includes non-produce only' do
-      it 'returns total amount from cart with tax on all items' do
-        expect(non_produce_cart.total).to eq(770)
+      it 'returns total tax of all items' do
+        expect(non_produce_cart.tax).to eq(70)
       end
     end
 
     context 'when cart includes non-produce and produce' do
-      it 'returns total amount from cart with tax on non-produce only' do
-        expect(mixed_cart.total).to eq(485)
+      it 'returns total tax of non-produce items only' do
+        expect(mixed_cart.tax).to eq(35)
       end
     end
+  end
+
+  describe '#total' do
+
   end
 end

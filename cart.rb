@@ -9,14 +9,13 @@ class Item
 end
 
 class Cart
-  TAX_RATE = 0.1
+  attr_reader :items, :subtotal, :tax, :tax_rate
 
-  attr_reader :items, :subtotal, :tax
-
-  def initialize
+  def initialize(tax_rate = 0.1)
     @items = []
     @subtotal = 0
     @tax = 0
+    @tax_rate = tax_rate
   end
 
   def total
@@ -27,7 +26,7 @@ class Cart
     items << item
 
     unless item.attributes[:type] == :produce
-      @tax += item.price * TAX_RATE
+      @tax += item.price * tax_rate
     end
 
     @subtotal += item.price
