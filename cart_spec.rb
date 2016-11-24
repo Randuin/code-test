@@ -1,14 +1,14 @@
 require './cart'
 
 RSpec.describe Cart do
-  let(:item) { Item.new('Carrot', 100) }
+  let(:item) { Item.new('Carrot', 100, {:type => :produce}) }
 
   describe '#subtotal' do
     it 'returns the total amount from the cart without tax' do
       cart = Cart.new
       cart.add_item(item)
       cart.add_item(item)
-      expect(cart.total).to eq(200)
+      expect(cart.subtotal).to eq(200)
     end
   end
 
@@ -18,7 +18,7 @@ RSpec.describe Cart do
       cart = Cart.new
       cart.add_item(item)
       cart.add_item(item)
-      expect(cart.subtotal).to eq(220)
+      expect(cart.total).to eq(220)
     end
   end
 
